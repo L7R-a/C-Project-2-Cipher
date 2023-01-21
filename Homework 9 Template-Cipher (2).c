@@ -31,15 +31,13 @@ char CipherSub(char in, const Cipher* cipherArray)
 {
 	int i;
 	for(i =0 ; i< CIPHER_SIZE; i++)
-	//TODO: Do a linear search from 0 to CIPHER_SIZE
+	//linear search from 0 to CIPHER_SIZE
 	{
 		if (in == cipherArray[i].originalCharacter)
 		{
 			return cipherArray[i].cipherCharacter;
 		}
-		//TODO: If in == originalCharacter then return cipherCharacter
 	}
-	//If not found, return -1
 	return -1;
 }
 //Function Input: String to cipher and cipher array
@@ -50,7 +48,7 @@ void ProcessCipher(char* input, char* output, const Cipher* cipherArray)
 {
 	int i = 0;
 	char give;
-	//TODO: Go through from the first character to the string length of input (recommend using strlen()
+// Go through from the first character to the string length of input 
 	for(i; i<strlen(input); i++)
 	{
 		give = CipherSub(input[i], cipherArray);
@@ -65,10 +63,7 @@ void ProcessCipher(char* input, char* output, const Cipher* cipherArray)
 		{
 			output[i] = give;
 		}
-		//TODO: If it returns -1, then output[i] = input[i]
-		//TODO: If it doesn't return -1, then output[i] = the substitute character
 	}
-	//Output isn't really a string yet, need to end it with '\0'
 	output[i] = '\0';
 }
 //Function Input: File pointers for input, output and cipher array
@@ -81,18 +76,13 @@ void ProcessFiles(FILE* fIn, FILE* fOut, const Cipher* cipherArray)
 	char bufferOut[10000];
 	char* input;
 	char output[100]="";
-	//TODO: Walk through the fIn file using feof and a while loop
 	while (!feof(fIn))
 	{
 		input = fgets(bufferIn, 10000, fIn);
-		//TODO: Get the next string from file input
 		ProcessCipher(input, &output[0], cipherArray);
-		//TODO: Call ProcessCipher to turn the input string to an output string
 		fputs(output, fOut);
-		//TODO: Call fputs to put the output string to fOut
 	}
 }
-//The main function
 void main()
 {
 	Cipher cipherArray[CIPHER_SIZE];
@@ -100,22 +90,16 @@ void main()
 	FILE* fOut = 0;
 	char fileNameIn[1000];
 	char fileNameOut[1000];
-	//Read our cipher file
 	ReadCipherFile(cipherArray);
-
-	//Figure out the name of input and output files
 
 	printf("Enter the file to input: ");
 	gets(fileNameIn);
 	printf("Enter the file to output: ");
 	gets(fileNameOut);
-	//TODO: Open input and output files using fopen
 	fIn = fopen("EncryptedText.txt", "r");
 	fOut = fopen("Result.txt", "w");
 
-	//Call ProcessFiles
 	ProcessFiles(fIn, fOut, cipherArray);
-	//TOOO: Close the files for proper cleanup
 	fclose(fIn);
 	fclose(fOut);
 }
